@@ -7,7 +7,7 @@ export default function Home() {
   const [keyword, setKeyword] = React.useState('')
   const fetchPackages = async () => {
     const response = await fetch(
-      `http://registry.npmjs.com/-/v1/search?text=${keyword}&size=20`,
+      `https://registry.npmjs.com/-/v1/search?text=${keyword}`,
       {
         method: 'GET',
       }
