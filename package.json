@@ -13,7 +13,9 @@
     "format": "prettier --write \"**/*.{js,jsx,json,ts,tsx,scss,css,md}\""
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
     "lucide-react": "^0.439.0",
+    "markdown-it": "^14.1.0",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
@@ -22,6 +24,8 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.2.5",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
