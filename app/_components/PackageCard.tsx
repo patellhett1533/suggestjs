@@ -12,7 +12,10 @@ interface Props {
 
 const PackageCard = (props: Props) => {
   return (
-    <Link href={`/${props.name}`} className="border border-border p-4 w-full">
+    <Link
+      href={`/${props.name.replace('/', '--')}`}
+      className="border border-border p-4 w-full"
+    >
       <h2 className="text-xl pb-6">{props.name}</h2>
       <div className="flex justify-between">
         <p className="text-sm">

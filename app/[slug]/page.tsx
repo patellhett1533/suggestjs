@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import matter from 'gray-matter'
 import md from 'markdown-it'
+import Link from 'next/link'
 
 const getPackageData = async (name: string) => {
   const response = await fetch(`https://registry.npmjs.com/${name}`, {
@@ -10,13 +11,66 @@ const getPackageData = async (name: string) => {
   const data = await response.json()
   return data
 }
+const getDownloads = async (name: string, created: string) => {
+  const response = await fetch(
+    `https://api.npmjs.org/downloads/range/${created}:${new Date()}/${name}`,
+    {
+      method: 'GET',
+    }
+  )
+  const data = await response.json()
+  return data
+}
+
+const getDownloadsByDay = async (name: string) => {
+  const response = await fetch(
+    `https://api.npmjs.org/downloads/point/last-day/${name}`,
+    {
+      method: 'GET',
+    }
+  )
+  const data = await response.json()
+  return data
+}
+
+const getDownloadsByMonth = async (name: string) => {
+  const response = await fetch(
+    `https://api.npmjs.org/downloads/point/last-month/${name}`,
+    {
+      method: 'GET',
+    }
+  )
+  const data = await response.json()
+  return data
+}
+
+const getDownloadsByWeek = async (name: string) => {
+  const response = await fetch(
+    `https://api.npmjs.org/downloads/point/last-week/${name}`,
+    {
+      method: 'GET',
+    }
+  )
+  const data = await response.json()
+  return data
+}
 
 const page = async ({ params }: { params: { slug: string } }) => {
+  params.slug = params.slug.replace('--', '/').replace('%40', '/')
+  console.log(params.slug)
   const packageData = await getPackageData(params.slug)
+  const totalDownloads = await getDownloads(
+    params.slug,
+    packageData.time.created
+  )
+  const downloadsByDay = await getDownloadsByDay(params.slug)
+  const downloadsByWeek = await getDownloadsByWeek(params.slug)
+  const downloadsByMonth = await getDownloadsByMonth(params.slug)
 
   if (!packageData) return <div></div>
 
   const readme = matter(packageData.readme)
+
   return (
     <div>
       <div className="w-full p-12">
@@ -26,12 +80,17 @@ const page = async ({ params }: { params: { slug: string } }) => {
             <p>
               {packageData['dist-tags'].latest} &nbsp;•&nbsp;{' '}
               {packageData.time.modified.split('T')[0]}
-              &nbsp;•&nbsp; 267 downloads
+              &nbsp;•&nbsp;{' '}
+              {totalDownloads.downloads.reduce(
+                (acc: number, item: any) => acc + item.downloads,
+                0
+              )}{' '}
+              downloads
             </p>
           </div>
         </div>
-        <div className="w-full mt-8">
-          <div className="w-3/4">
+        <div className="w-full mt-8 flex items-start gap-12">
+          <div className="w-2/3">
             <div>
               <h3 className="text-xl font-semibold">Install</h3>
               <p className="border border-border p-4 w-fit mt-4 flex items-center gap-20">
@@ -46,14 +105,18 @@ const page = async ({ params }: { params: { slug: string } }) => {
               </p>
             </div>
             <div className="mt-8">
-              <h3 className="text-xl font-semibold">Description</h3>
+              <h3 className="text-xl font-semibold border-b border-border pb-4">
+                Description
+              </h3>
               <div
                 className="mt-4"
                 dangerouslySetInnerHTML={{ __html: packageData.description }}
               ></div>
             </div>
             <div className="mt-12">
-              <h3 className="text-xl font-semibold">README File</h3>
+              <h3 className="text-xl font-semibold border-b border-border pb-4">
+                README File
+              </h3>
               <div
                 className="mt-4"
                 dangerouslySetInnerHTML={{
@@ -62,7 +125,52 @@ const page = async ({ params }: { params: { slug: string } }) => {
               ></div>
             </div>
           </div>
-          <div className="w-1/4"></div>
+          <div className="w-1/3">
+            <div>
+              <h3 className="text-xl font-semibold border-b border-border pb-4">
+                Download History
+              </h3>
+              <div className="mt-4 flex items-center justify-between">
+                <p> Last Day : </p>
+                <p>
+                  <span className="font-semibold text-lg">
+                    {downloadsByDay.downloads}
+                  </span>{' '}
+                  downloads
+                </p>
+              </div>
+              <div className="mt-4 flex items-center justify-between">
+                <p> Last Week : </p>
+                <p>
+                  <span className="font-semibold text-lg">
+                    {downloadsByWeek.downloads}
+                  </span>{' '}
+                  downloads
+                </p>
+              </div>
+              <div className="mt-4 flex items-center justify-between">
+                <p> Last Month : </p>
+                <p>
+                  <span className="font-semibold text-lg">
+                    {downloadsByMonth.downloads}
+                  </span>{' '}
+                  downloads
+                </p>
+              </div>
+            </div>
+            <div className="mt-12">
+              <h3 className="text-xl font-semibold border-b border-border pb-4">
+                Keywords
+              </h3>
+              <div className="flex items-center flex-wrap gap-4 mt-8">
+                {packageData.keywords.map((keyword: string, index: number) => (
+                  <Link href="#" key={index}>
+                    {keyword}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
