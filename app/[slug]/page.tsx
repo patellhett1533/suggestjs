@@ -3,6 +3,7 @@ import Image from 'next/image'
 import matter from 'gray-matter'
 import md from 'markdown-it'
 import Link from 'next/link'
+import PerformenceGraph from '../_components/PerformenceGraph'
 
 const getPackageData = async (name: string) => {
   const response = await fetch(`https://registry.npmjs.com/${name}`, {
@@ -10,6 +11,17 @@ const getPackageData = async (name: string) => {
   })
   const data = await response.json()
   return data
+}
+
+const getPackageScore = async (name: string) => {
+  const response = await fetch(
+    `https://registry.npmjs.com/-/v1/search?text=${name}&size=1`,
+    {
+      method: 'GET',
+    }
+  )
+  const data = await response.json()
+  return { score: data.objects[0].score, search: data.objects[0].searchScore }
 }
 const getDownloads = async (name: string, created: string) => {
   const response = await fetch(
@@ -57,7 +69,6 @@ const getDownloadsByWeek = async (name: string) => {
 
 const page = async ({ params }: { params: { slug: string } }) => {
   params.slug = decodeURIComponent(params.slug)
-  console.log(params.slug)
   const packageData = await getPackageData(params.slug)
   const totalDownloads = await getDownloads(
     params.slug,
@@ -66,10 +77,12 @@ const page = async ({ params }: { params: { slug: string } }) => {
   const downloadsByDay = await getDownloadsByDay(params.slug)
   const downloadsByWeek = await getDownloadsByWeek(params.slug)
   const downloadsByMonth = await getDownloadsByMonth(params.slug)
+  const packageScore = await getPackageScore(params.slug)
 
   if (!packageData) return <div></div>
 
   const readme = matter(packageData.readme)
+  console.log(packageScore)
   return (
     <div>
       <div className="w-full p-12 ">
@@ -125,7 +138,30 @@ const page = async ({ params }: { params: { slug: string } }) => {
             </div>
           </div>
           <div className="w-1/3">
-            <div>
+            <div className="pb-4">
+              <h3 className="text-xl font-semibold border-b border-border pb-4">
+                Performence
+              </h3>
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                <div className="flex flex-col items-center gap-2">
+                  <PerformenceGraph score={packageScore.score.detail.quality} />
+                  <p>Quality</p>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <PerformenceGraph
+                    score={packageScore.score.detail.popularity}
+                  />
+                  <p>Popularity</p>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <PerformenceGraph
+                    score={packageScore.score.detail.maintenance}
+                  />
+                  <p>Maintenance</p>
+                </div>
+              </div>
+            </div>
+            <div className="pt-4">
               <h3 className="text-xl font-semibold border-b border-border pb-4">
                 Download History
               </h3>
@@ -162,11 +198,12 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 Keywords
               </h3>
               <div className="flex items-center flex-wrap gap-4 mt-8">
-                {packageData.keywords.map((keyword: string, index: number) => (
-                  <Link href="#" key={index}>
-                    {keyword}
-                  </Link>
-                ))}
+                {packageData.keywords.length > 0 &&
+                  packageData.keywords.map((keyword: string, index: number) => (
+                    <Link href="#" key={index}>
+                      {keyword}
+                    </Link>
+                  ))}
               </div>
             </div>
           </div>
