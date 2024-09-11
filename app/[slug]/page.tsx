@@ -56,7 +56,7 @@ const getDownloadsByWeek = async (name: string) => {
 }
 
 const page = async ({ params }: { params: { slug: string } }) => {
-  params.slug = params.slug.replace('--', '/').replace('%40', '/')
+  params.slug = decodeURIComponent(params.slug)
   console.log(params.slug)
   const packageData = await getPackageData(params.slug)
   const totalDownloads = await getDownloads(
