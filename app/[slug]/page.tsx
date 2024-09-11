@@ -61,7 +61,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
   const packageData = await getPackageData(params.slug)
   const totalDownloads = await getDownloads(
     params.slug,
-    packageData.time.created
+    packageData.time.created.split('T')[0]
   )
   const downloadsByDay = await getDownloadsByDay(params.slug)
   const downloadsByWeek = await getDownloadsByWeek(params.slug)
@@ -70,10 +70,9 @@ const page = async ({ params }: { params: { slug: string } }) => {
   if (!packageData) return <div></div>
 
   const readme = matter(packageData.readme)
-
   return (
     <div>
-      <div className="w-full p-12">
+      <div className="w-full p-12 ">
         <div className="w-full flex items-center justify-between border-b border-border pb-4">
           <h1 className="text-4xl font-semibold">{params.slug}</h1>
           <div>
