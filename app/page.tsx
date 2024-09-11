@@ -1,6 +1,82 @@
 'use client'
 import React from 'react'
 import PackageCard from './_components/PackageCard'
+import Link from 'next/link'
+
+const categories = [
+  {
+    name: 'react',
+    slug: 'react',
+  },
+  {
+    name: 'next',
+    slug: 'next',
+  },
+  {
+    name: 'node',
+    slug: 'node',
+  },
+  {
+    name: 'boilerplate',
+    slug: 'boilerplate',
+  },
+  {
+    name: 'angular',
+    slug: 'angular',
+  },
+  {
+    name: 'express',
+    slug: 'express',
+  },
+  {
+    name: 'nest',
+    slug: 'nest',
+  },
+  {
+    name: 'mysql',
+    slug: 'mysql',
+  },
+  {
+    name: 'mongodb',
+    slug: 'mongodb',
+  },
+  {
+    name: 'postgresql',
+    slug: 'postgresql',
+  },
+  {
+    name: 'typescript',
+    slug: 'typescript',
+  },
+  {
+    name: 'graphql',
+    slug: 'graphql',
+  },
+  {
+    name: 'tslib',
+    slug: 'tslib',
+  },
+  {
+    name: 'animation',
+    slug: 'animation',
+  },
+  {
+    name: 'scroll',
+    slug: 'scroll',
+  },
+  {
+    name: 'slider',
+    slug: 'slider',
+  },
+  {
+    name: 'cli',
+    slug: 'cli',
+  },
+  {
+    name: 'aws',
+    slug: 'aws',
+  },
+]
 
 export default function Home() {
   const [packages, setPackages] = React.useState([])
@@ -35,7 +111,7 @@ export default function Home() {
             Search
           </button>
         </div>
-        {packages.length > 0 && (
+        {packages.length > 0 ? (
           <div className="mt-20 w-full">
             <div className="w-full grid grid-cols-3 gap-8">
               {packages.map((item: any) => (
@@ -48,6 +124,14 @@ export default function Home() {
                 />
               ))}
             </div>
+          </div>
+        ) : (
+          <div className="w-full flex items-center gap-6 flex-wrap mt-20 justify-center">
+            {categories.map((category, index) => (
+              <Link href={`/category/${category.slug}`} key={index}>
+                {category.name}
+              </Link>
+            ))}
           </div>
         )}
       </div>
