@@ -198,7 +198,8 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 Keywords
               </h3>
               <div className="flex items-center flex-wrap gap-4 mt-8">
-                {packageData.keywords.length > 0 &&
+                {packageData.keywords &&
+                  packageData.keywords.length > 0 &&
                   packageData.keywords.map((keyword: string, index: number) => (
                     <Link href="#" key={index}>
                       {keyword}
