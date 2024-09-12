@@ -82,7 +82,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
   if (!packageData) return <div></div>
 
   const readme = matter(packageData.readme)
-  console.log(packageScore)
   return (
     <div>
       <div className="w-full p-12 ">

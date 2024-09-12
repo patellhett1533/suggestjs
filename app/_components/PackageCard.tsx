@@ -1,36 +1,46 @@
-import Link from 'next/link'
 import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 
 interface Props {
   name: string
   version: string
   date: string
-  size?: string
-  downloads?: string
   description?: string
+  github?: string
 }
 
 const PackageCard = (props: Props) => {
   return (
-    <Link
-      href={`/${encodeURIComponent(`${props.name}`)}`}
-      className="border border-border p-4 w-full"
-    >
-      <h2 className="text-xl pb-6">{props.name}</h2>
-      <div className="flex justify-between">
+    <div className="border border-border p-4 w-full">
+      <Link
+        href={`/${encodeURIComponent(`${props.name}`)}`}
+        className="text-xl"
+      >
+        {props.name}
+      </Link>
+      <div className="flex justify-between pt-6">
         <p className="text-sm">
           {props.date.split('T')[0].replaceAll('-', '/')}
         </p>
-        <p className="text-sm">267 downloads</p>
+        {props.github && (
+          <Link href={props.github} target="_blank">
+            <Image
+              src="/images/github.svg"
+              width={20}
+              height={20}
+              alt="github"
+            />
+          </Link>
+        )}
       </div>
       <div className="flex justify-between mt-2">
         <p className="text-sm">{props.version} version</p>
-        <p className="text-sm">187.68 kB size</p>
       </div>
       <p className="text-sm mt-4">
         {props.description && props.description.substring(0, 50) + '...'}
       </p>
-    </Link>
+    </div>
   )
 }
 
