@@ -97,4 +97,7 @@ body {
 .readme-section pre {
   padding: 16px;
   background-color: hsl(var(--muted));
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
 }
