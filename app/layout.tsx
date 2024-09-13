@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './_style/globals.css'
 import Header from './_components/Header'
+import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'Suggest Js  - Find npm packages',
@@ -18,6 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html>
+      <Script
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2192578426624151`}
+        async
+        crossOrigin="anonymous"
+        strategy="lazyOnload"
+      />
       <body>
         <Header />
         {children}
