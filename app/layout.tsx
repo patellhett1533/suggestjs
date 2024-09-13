@@ -3,8 +3,12 @@ import './_style/globals.css'
 import Header from './_components/Header'
 
 export const metadata: Metadata = {
-  title: 'Suggest Js  - Find Packages',
-  description: 'thsi is a plateform for finding a appropriate npm packages',
+  title: 'Suggest Js  - Find npm packages',
+  description: 'this is a plateform for finding a appropriate npm packages',
+  keywords: ['npm', 'package', 'suggest', 'suggestjs', 'suggestjs.com'],
+  icons: {
+    icon: '/images/web-logo.png',
+  },
 }
 
 export default function RootLayout({
