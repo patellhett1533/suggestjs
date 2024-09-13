@@ -17,7 +17,9 @@ const page = async ({ params }: { params: { slug: string } }) => {
   return (
     <div className="max-w-[1024px] mx-auto py-12">
       <div>
-        <h1 className="text-2xl capitalize font-semibold">{params.slug}</h1>
+        <h1 className="text-2xl capitalize font-semibold">
+          Packages for keyword: &ldquo;{params.slug}&rdquo;
+        </h1>
       </div>
       <div className="w-full grid grid-cols-3 gap-8 mt-8">
         {packagesData.objects.map((item: any) => (

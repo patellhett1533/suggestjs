@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0 0;
-  padding: 0 0;
-  box-sizing: border-box;
-}
-
-body {
-  width: 100%;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 @layer base {
   :root {
     --background: 224 71.4% 4.1%;
@@ -76,6 +58,12 @@ body {
   }
 }
 
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -84,4 +72,29 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+* {
+  margin: 0 0;
+  padding: 0 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.readme-section h1,
+.readme-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.readme-section pre {
+  padding: 16px;
+  background-color: hsl(var(--muted));
 }

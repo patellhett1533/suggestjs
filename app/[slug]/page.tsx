@@ -1,9 +1,8 @@
 import React from 'react'
-import Image from 'next/image'
-import matter from 'gray-matter'
-import md from 'markdown-it'
+import Markdown from 'markdown-to-jsx'
 import Link from 'next/link'
 import PerformenceGraph from '../_components/PerformenceGraph'
+import CopyBox from '../_components/CopyBox'
 
 const getPackageData = async (name: string) => {
   const response = await fetch(`https://registry.npmjs.com/${name}`, {
@@ -24,8 +23,9 @@ const getPackageScore = async (name: string) => {
   return { score: data.objects[0].score, search: data.objects[0].searchScore }
 }
 const getDownloads = async (name: string, created: string) => {
+  const date = new Date()
   const response = await fetch(
-    `https://api.npmjs.org/downloads/range/${created}:${new Date()}/${name}`,
+    `https://api.npmjs.org/downloads/range/${created}:${date.toISOString().split('T')[0]}/${name}`,
     {
       method: 'GET',
     }
@@ -80,8 +80,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
   const packageScore = await getPackageScore(params.slug)
 
   if (!packageData) return <div></div>
-
-  const readme = matter(packageData.readme)
   return (
     <div>
       <div className="w-full p-12 ">
@@ -104,16 +102,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <div className="w-2/3">
             <div>
               <h3 className="text-xl font-semibold">Install</h3>
-              <p className="border border-border p-4 w-fit mt-4 flex items-center gap-20">
-                <span>npm i {params.slug}</span>
-                <Image
-                  src="/images/copy.svg"
-                  alt="Optimize Image"
-                  width={25}
-                  height={25}
-                  className="cursor-pointer"
-                />
-              </p>
+              <CopyBox slug={params.slug} />
             </div>
             <div className="mt-8">
               <h3 className="text-xl font-semibold border-b border-border pb-4">
@@ -124,16 +113,17 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 dangerouslySetInnerHTML={{ __html: packageData.description }}
               ></div>
             </div>
-            <div className="mt-12">
-              <h3 className="text-xl font-semibold border-b border-border pb-4">
+            <div className="mt-12 readme-section">
+              <h3 className="text-xl font-semibold border-b border-border pb-4 mb-4">
                 README File
               </h3>
-              <div
-                className="mt-4"
+              <Markdown>{packageData.readme}</Markdown>
+              {/* <div
+                className="readme-section mt-4"
                 dangerouslySetInnerHTML={{
-                  __html: md().render(readme.content),
+                  __html: packageData.readme,
                 }}
-              ></div>
+              ></div> */}
             </div>
           </div>
           <div className="w-1/3">

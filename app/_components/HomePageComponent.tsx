@@ -83,7 +83,7 @@ const HomePageComponent = () => {
   const [keyword, setKeyword] = React.useState('')
   const fetchPackages = async () => {
     const response = await fetch(
-      `https://registry.npmjs.com/-/v1/search?text=${keyword}&size=5000`,
+      `https://registry.npmjs.com/-/v1/search?text=${keyword}&size=1000&sort=popularity`,
       {
         method: 'GET',
       }
