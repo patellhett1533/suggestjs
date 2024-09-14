@@ -93,7 +93,7 @@ const HomePageComponent = () => {
   }
   return (
     <>
-      <div className="mt-12 w-full flex items-center gap-4">
+      <div className="mt-12 max-md:px-6 w-full flex items-center gap-4 max-md:flex-col">
         <input
           type="text"
           onChange={(e) => setKeyword(e.target.value)}
@@ -108,8 +108,8 @@ const HomePageComponent = () => {
         </button>
       </div>
       {packages.length > 0 ? (
-        <div className="mt-20 w-full">
-          <div className="w-full grid grid-cols-3 gap-8">
+        <div className="mt-20 w-full max-md:px-6">
+          <div className="w-full grid md:grid-cols-3 grid-cols-1 md:gap-8 gap-4">
             {packages.map((item: any) => (
               <PackageCard
                 key={item.package.name}
@@ -123,7 +123,7 @@ const HomePageComponent = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full flex items-center gap-6 flex-wrap mt-20 justify-center">
+        <div className="w-full flex items-center gap-6 flex-wrap mt-20 justify-center max-md:px-6">
           {categories.map((category, index) => (
             <Link href={`/category/${category.slug}`} key={index}>
               {category.name}

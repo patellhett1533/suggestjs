@@ -12,7 +12,7 @@ interface Props {
 
 const PackageCard = (props: Props) => {
   return (
-    <div className="border border-border p-4 w-full">
+    <div className="border border-border md:p-4 p-3 w-full">
       <Link
         href={`/${encodeURIComponent(`${props.name}`)}`}
         className="text-xl"

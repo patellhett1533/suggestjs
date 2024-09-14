@@ -15,13 +15,13 @@ const getPackageScore = async (name: string) => {
 const page = async ({ params }: { params: { slug: string } }) => {
   const packagesData = await getPackageScore(params.slug)
   return (
-    <div className="max-w-[1024px] mx-auto py-12">
+    <div className="max-w-[1024px] mx-auto py-12 max-md:px-4">
       <div>
         <h1 className="text-2xl capitalize font-semibold">
           Packages for keyword: &ldquo;{params.slug}&rdquo;
         </h1>
       </div>
-      <div className="w-full grid grid-cols-3 gap-8 mt-8">
+      <div className="w-full grid md:grid-cols-3 grid-cols-2 md:gap-8 gap-4 mt-8">
         {packagesData.objects.map((item: any) => (
           <PackageCard
             key={item.package.name}

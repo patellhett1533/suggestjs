@@ -82,11 +82,11 @@ const page = async ({ params }: { params: { slug: string } }) => {
   if (!packageData) return <div></div>
   return (
     <div>
-      <div className="w-full p-12 ">
-        <div className="w-full flex items-center justify-between border-b border-border pb-4">
-          <h1 className="text-4xl font-semibold">{params.slug}</h1>
-          <div>
-            <p>
+      <div className="w-full md:p-12 p-6">
+        <div className="w-full flex md:items-center max-md:flex-col justify-between border-b border-border pb-4">
+          <h1 className="md:text-4xl text-2xl font-semibold">{params.slug}</h1>
+          <div className="max-md:mt-4">
+            <p className="max-md:text-sm">
               {packageData['dist-tags'].latest} &nbsp;•&nbsp;{' '}
               {packageData.time.modified.split('T')[0]}
               &nbsp;•&nbsp;{' '}
@@ -98,8 +98,8 @@ const page = async ({ params }: { params: { slug: string } }) => {
             </p>
           </div>
         </div>
-        <div className="w-full mt-8 flex items-start gap-12">
-          <div className="w-2/3">
+        <div className="w-full mt-8 flex items-start gap-12 max-md:flex-col">
+          <div className="md:w-2/3 w-full">
             <div>
               <h3 className="text-xl font-semibold">Install</h3>
               <CopyBox slug={params.slug} />
@@ -126,7 +126,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
               ></div> */}
             </div>
           </div>
-          <div className="w-1/3">
+          <div className="md:w-1/3 w-full">
             <div className="pb-4">
               <h3 className="text-xl font-semibold border-b border-border pb-4">
                 Performence

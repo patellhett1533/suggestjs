@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <div className="w-full flex flex-col justify-start items-center max-w-[1024px] mx-auto">
-        <h1 className="text-4xl mt-24 font-semibold">
+        <h1 className="md:text-4xl text-2xl mt-24 font-semibold max-md:text-center">
           Find perfact package for your project
         </h1>
         <HomePageComponent />
