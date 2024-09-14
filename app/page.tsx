@@ -2,7 +2,6 @@ import React from 'react'
 import HomePageComponent from './_components/HomePageComponent'
 
 export default function Home() {
-  console.log(new Date())
   return (
     <>
       <div className="w-full flex flex-col justify-start items-center max-w-[1024px] mx-auto">
