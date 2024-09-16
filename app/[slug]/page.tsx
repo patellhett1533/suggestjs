@@ -3,6 +3,7 @@ import Markdown from 'markdown-to-jsx'
 import Link from 'next/link'
 import PerformenceGraph from '../_components/PerformenceGraph'
 import CopyBox from '../_components/CopyBox'
+import Image from 'next/image'
 
 const getPackageData = async (name: string) => {
   const response = await fetch(`https://registry.npmjs.com/${name}`, {
@@ -194,6 +195,43 @@ const page = async ({ params }: { params: { slug: string } }) => {
                       {keyword}
                     </Link>
                   ))}
+              </div>
+            </div>
+            <div className="mt-12">
+              <h3 className="text-xl font-semibold border-b border-border pb-4">
+                Links
+              </h3>
+              <div className="flex items-center flex-wrap gap-4 mt-8">
+                <Link
+                  href={packageData.repository.url.split('+')[1]}
+                  target="_blank"
+                >
+                  <Image
+                    src="/images/github.svg"
+                    width={20}
+                    height={20}
+                    alt="github"
+                  />
+                </Link>
+                <Link
+                  href={`https://www.npmjs.com/package/${packageData.name}`}
+                  target="_blank"
+                >
+                  <Image
+                    src="/images/npm.svg"
+                    width={30}
+                    height={30}
+                    alt="npm"
+                  />
+                </Link>
+                <Link href={packageData.homepage} target="_blank">
+                  <Image
+                    src="/images/globe.svg"
+                    width={20}
+                    height={20}
+                    alt="globe"
+                  />
+                </Link>
               </div>
             </div>
           </div>
