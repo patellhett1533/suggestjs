@@ -202,17 +202,16 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 Links
               </h3>
               <div className="flex items-center flex-wrap gap-4 mt-8">
-                <Link
-                  href={packageData.repository.url.split('+')[1]}
-                  target="_blank"
-                >
-                  <Image
-                    src="/images/github.svg"
-                    width={20}
-                    height={20}
-                    alt="github"
-                  />
-                </Link>
+                {packageData.repository && (
+                  <Link href={packageData.repository.url} target="_blank">
+                    <Image
+                      src="/images/github.svg"
+                      width={20}
+                      height={20}
+                      alt="github"
+                    />
+                  </Link>
+                )}
                 <Link
                   href={`https://www.npmjs.com/package/${packageData.name}`}
                   target="_blank"
@@ -224,14 +223,16 @@ const page = async ({ params }: { params: { slug: string } }) => {
                     alt="npm"
                   />
                 </Link>
-                <Link href={packageData.homepage} target="_blank">
-                  <Image
-                    src="/images/globe.svg"
-                    width={20}
-                    height={20}
-                    alt="globe"
-                  />
-                </Link>
+                {packageData.homepage && (
+                  <Link href={packageData.homepage} target="_blank">
+                    <Image
+                      src="/images/globe.svg"
+                      width={20}
+                      height={20}
+                      alt="globe"
+                    />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
